@@ -35,6 +35,9 @@
         ifdCargoNixFile = (
           crate2nix.tools.${system}.generatedCargoNix {
             name = "repro-crate2nix-348";
+            # Workaround IFD injecting wrong IDs by injecting the non-IFD generated ones in there
+            # This does not change the error. 🤔
+            # additionalCrateHashes = (builtins.fromJSON (builtins.readFile ./not-IFD/crate-hashes.json));
             src = lib.fileset.toSource {
               root = ./.;
               fileset = lib.fileset.fromSource (
