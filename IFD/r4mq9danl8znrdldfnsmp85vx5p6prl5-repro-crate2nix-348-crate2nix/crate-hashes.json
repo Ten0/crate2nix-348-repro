@@ -1,4 +1,4 @@
 {
-  "lightgbm 0.2.3 (git+https://github.com/Ten0/lightgbm-rs.git?rev=ebc5262299d75cc770e21416f9e3ef8204427fba#ebc5262299d75cc770e21416f9e3ef8204427fba)": "0nr42asw4sg7q7xrkg565ivl1s9b6g75kflzy9hvl3srqrnxf10z",
-  "lightgbm-sys 0.3.0 (git+https://github.com/Ten0/lightgbm-rs.git?rev=ebc5262299d75cc770e21416f9e3ef8204427fba#ebc5262299d75cc770e21416f9e3ef8204427fba)": "0nr42asw4sg7q7xrkg565ivl1s9b6g75kflzy9hvl3srqrnxf10z"
+  "git+https://github.com/Ten0/lightgbm-rs.git?rev=ebc5262299d75cc770e21416f9e3ef8204427fba#lightgbm-sys@0.3.0": "0nr42asw4sg7q7xrkg565ivl1s9b6g75kflzy9hvl3srqrnxf10z",
+  "git+https://github.com/Ten0/lightgbm-rs.git?rev=ebc5262299d75cc770e21416f9e3ef8204427fba#lightgbm@0.2.3": "0nr42asw4sg7q7xrkg565ivl1s9b6g75kflzy9hvl3srqrnxf10z"
 }
