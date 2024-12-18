@@ -15,6 +15,54 @@ to:
 
 crashes with the error described at https://github.com/nix-community/crate2nix/issues/348#issue-2274322372
 
+```
+@nix { "action": "setPhase", "phase": "unpackPhase" }
+Running phase: unpackPhase
+unpacking source archive /nix/store/k6vyx5d285pnh7gc5232bds3vdqmgi1a-source
+source root is source
+@nix { "action": "setPhase", "phase": "buildPhase" }
+Running phase: buildPhase
+++ crate2nix generate -f ././Cargo.toml -o Cargo-generated.nix -h /nix/store/zj3s7v33xqmdi2p4i6mmp0sgm6wry2xv-repro-crate2nix-348-crate2nix/crate-hashes.json
+Error: while retrieving metadata about ././Cargo.toml: `cargo metadata` exited with an error: error: no matching package named `lightgbm-sys` found
+location searched: https://github.com/Ten0/lightgbm-rs.git?rev=ebc5262299d75cc770e21416f9e3ef8204427fba#ebc52622
+required by package `lightgbm v0.2.3 (https://github.com/Ten0/lightgbm-rs.git?rev=ebc5262299d75cc770e21416f9e3ef8204427fba#ebc52622)`
+    ... which satisfies git dependency `lightgbm` (locked to 0.2.3) of package `project1 v0.0.0 (/build/source/project1)`
+
+crate2nix failed.
+== cargo/config (BEGIN)
+    [source.crates-io]
+    replace-with = "vendored-sources"
+    
+    [source."https://github.com/Ten0/lightgbm-rs.git?rev=ebc5262299d75cc770e21416f9e3ef8204427fba#ebc5262299d75cc770e21416f9e3ef8204427fba"]
+    git = "https://github.com/Ten0/lightgbm-rs.git"
+    rev = "ebc5262299d75cc770e21416f9e3ef8204427fba"
+    
+    
+    replace-with = "vendored-sources"
+    
+    
+    [source.vendored-sources]
+    directory = "/nix/store/hhb218vwxy5yfwscn7szwld22ybs0mv2-deps"
+
+== cargo/config (END)
+
+== crate-hashes.json (BEGIN)
+    {
+      "lightgbm 0.2.3 (git+https://github.com/Ten0/lightgbm-rs.git?rev=ebc5262299d75cc770e21416f9e3ef8204427fba#ebc5262299d75cc770e21416f9e3ef8204427fba)": "0nr42asw4sg7q7xrkg565ivl1s9b6g75kflzy9hvl3srqrnxf10z",
+      "lightgbm-sys 0.3.0 (git+https://github.com/Ten0/lightgbm-rs.git?rev=ebc5262299d75cc770e21416f9e3ef8204427fba#ebc5262299d75cc770e21416f9e3ef8204427fba)": "0nr42asw4sg7q7xrkg565ivl1s9b6g75kflzy9hvl3srqrnxf10z"
+    }
+== crate-hashes.json (END)
+
+== ls -la (BEGIN)
+total 28
+drwxr-xr-x 3 nixbld nixbld 4096 Jan  1  1970 .
+drwx------ 3 nixbld nixbld 4096 Dec 18 22:39 ..
+-rw-r--r-- 1 nixbld nixbld 9562 Jan  1  1970 Cargo.lock
+-rw-r--r-- 1 nixbld nixbld   61 Jan  1  1970 Cargo.toml
+drwxr-xr-x 3 nixbld nixbld 4096 Jan  1  1970 project1
+== ls -la (END)
+```
+
 Is also tracked in the IFD folder which `crate-hashes.json` it attempts to use.
 
 ## Wrong ID
