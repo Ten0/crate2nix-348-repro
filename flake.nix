@@ -32,53 +32,53 @@
           overlays = [ (import rust-overlay) ];
         };
         lib = pkgs.lib;
-        cargoNix =
-          pkgs.callPackage
-            (crate2nix.tools.${system}.generatedCargoNix {
-              name = "repro-crate2nix-348";
-              src = lib.fileset.toSource {
-                root = ./.;
-                fileset = lib.fileset.fromSource (
-                  lib.cleanSourceWith {
-                    src = ./.;
-                    filter =
-                      path: type:
+        cargoNixFile = (
+          crate2nix.tools.${system}.generatedCargoNix {
+            name = "repro-crate2nix-348";
+            src = lib.fileset.toSource {
+              root = ./.;
+              fileset = lib.fileset.fromSource (
+                lib.cleanSourceWith {
+                  src = ./.;
+                  filter =
+                    path: type:
+                    (
+                      let
+                        baseName = baseNameOf (toString path);
+                      in
                       (
-                        let
-                          baseName = baseNameOf (toString path);
-                        in
-                        (
-                          (type == "directory" && baseName != "target")
-                          || (
-                            baseName == "Cargo.toml"
-                            || baseName == "Cargo.lock"
-                            || baseName == "lib.rs"
-                            || baseName == "main.rs"
-                          )
+                        (type == "directory" && baseName != "target")
+                        || (
+                          baseName == "Cargo.toml"
+                          || baseName == "Cargo.lock"
+                          || baseName == "lib.rs"
+                          || baseName == "main.rs"
                         )
-                        && (lib.cleanSourceFilter path type) # + other basic filters
-                      );
-                  }
-                );
-              };
-              cargoToml = "./Cargo.toml";
-            })
-            {
-              buildRustCrateForPkgs =
-                pkgs:
-                pkgs.buildRustCrate.override (
-                  let
-                    rustToolchain = pkgs.rust-bin.stable.latest;
-                  in
-                  {
-                    # Use the latest stable rust version from oxalica overlay instead of the one in nixpkgs to build workspace packages
-                    # https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/rust.section.md
-                    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/rust/build-rust-crate/default.nix#L12-L13
-                    rustc = rustToolchain.default;
-                    cargo = rustToolchain.cargo;
-                  }
-                );
+                      )
+                      && (lib.cleanSourceFilter path type) # + other basic filters
+                    );
+                }
+              );
             };
+            cargoToml = "./Cargo.toml";
+          }
+        );
+        cargoNix = pkgs.callPackage cargoNixFile {
+          buildRustCrateForPkgs =
+            pkgs:
+            pkgs.buildRustCrate.override (
+              let
+                rustToolchain = pkgs.rust-bin.stable.latest;
+              in
+              {
+                # Use the latest stable rust version from oxalica overlay instead of the one in nixpkgs to build workspace packages
+                # https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/rust.section.md
+                # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/rust/build-rust-crate/default.nix#L12-L13
+                rustc = rustToolchain.default;
+                cargo = rustToolchain.cargo;
+              }
+            );
+        };
         rustWorkspace = lib.mapAttrs (name: value: value.build) cargoNix.workspaceMembers;
       in
       {
@@ -88,9 +88,19 @@
             buildInputs = [
               rustWorkspace.project1
 
+              (pkgs.writeScriptBin "copy_ifd_generated_crate_hashes" ''
+                #!/usr/bin/env bash
+                mkdir -p IFD
+                cp -r "${cargoNixFile}" IFD
+              '')
+
               pkgs.rust-bin.stable.latest.default # Make Rust available in the shell as well
               crate2nix.packages.${system}.default # Make crate2nix available in the shell as well
             ];
+
+            shellHook = ''
+              echo "IFD-generated crate-hashes.json: ${cargoNixFile}/crate-hashes.json"
+            '';
           }
         );
       }
