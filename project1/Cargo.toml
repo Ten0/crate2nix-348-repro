@@ -5,6 +5,4 @@
 	workspace = ".."
 
 [dependencies]
-	log = { git = "https://github.com/rust-lang/log" }
-	# log = "0.4" # works
-	rand = "0.8"
+	lightgbm = { git = "https://github.com/Ten0/lightgbm-rs.git", rev = "ebc5262299d75cc770e21416f9e3ef8204427fba" }
