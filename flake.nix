@@ -91,7 +91,7 @@
         devShells.default = (
           pkgs.mkShell {
             buildInputs = [
-              #rustWorkspace.project1
+              rustWorkspace.project1
 
               # (pkgs.writeScriptBin "copy_ifd_generated_crate_hashes" ''
               #   #!/usr/bin/env bash
