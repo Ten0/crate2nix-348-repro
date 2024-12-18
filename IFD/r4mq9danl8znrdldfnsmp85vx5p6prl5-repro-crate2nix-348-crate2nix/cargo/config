@@ -1,0 +1,13 @@
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source."https://github.com/Ten0/lightgbm-rs.git?rev=ebc5262299d75cc770e21416f9e3ef8204427fba#ebc5262299d75cc770e21416f9e3ef8204427fba"]
+git = "https://github.com/Ten0/lightgbm-rs.git"
+rev = "ebc5262299d75cc770e21416f9e3ef8204427fba"
+
+
+replace-with = "vendored-sources"
+
+
+[source.vendored-sources]
+directory = "/nix/store/hhb218vwxy5yfwscn7szwld22ybs0mv2-deps"
