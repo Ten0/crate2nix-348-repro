@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     crate2nix = {
-      url = "github:nix-community/crate2nix";
+      url = "github:nix-community/crate2nix?rev=cf034861fdc4e091fc7c5f01d6c022dc46686cf1";
     };
   };
 

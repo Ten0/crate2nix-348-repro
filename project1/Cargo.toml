@@ -1,0 +1,10 @@
+[package]
+	edition = "2021"
+	name = "project1"
+	version = "0.0.0"
+	workspace = ".."
+
+[dependencies]
+	log = { git = "https://github.com/rust-lang/log" }
+	# log = "0.4" # works
+	rand = "0.8"
