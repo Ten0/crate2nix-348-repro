@@ -28,4 +28,7 @@ additionalCrateHashes = (builtins.fromJSON (builtins.readFile ./not-IFD/crate-ha
 
 Package ID used by IFD is defined here: https://github.com/nix-community/crate2nix/blob/cf034861fdc4e091fc7c5f01d6c022dc46686cf1/tools.nix#L246-L249
 
+It's unclear to me what issue this may cause.
+It seems like it should break resolution here: https://github.com/nix-community/crate2nix/blob/8537c2d7cb623679aaeff62c4c4c43a91566ab09/crate2nix/src/prefetch.rs#L90-L91
+
 More discussion here: https://github.com/nix-community/crate2nix/pull/341#issuecomment-2090407813
