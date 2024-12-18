@@ -86,8 +86,10 @@
         devShells.default = (
           pkgs.mkShell {
             buildInputs = [
-              pkgs.rust-bin.stable.latest.default
               rustWorkspace.project1
+
+              pkgs.rust-bin.stable.latest.default # Make Rust available in the shell as well
+              crate2nix.packages.${system}.default # Make crate2nix available in the shell as well
             ];
           }
         );
